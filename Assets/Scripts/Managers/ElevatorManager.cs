@@ -12,7 +12,7 @@ public class ElevatorManager : MonoBehaviour
         // Find best elevator
         foreach (var elevator in elevators)
         {
-            if (!elevator.CanServeDirection(floor, direction))
+            if (!elevator.DecideDirection(floor, direction))
             {
                 continue;
             }

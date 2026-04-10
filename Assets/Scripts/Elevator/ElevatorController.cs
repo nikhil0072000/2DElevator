@@ -12,7 +12,7 @@ public class ElevatorController : MonoBehaviour
 
     private bool isMoving;
     private int targetFloor;
-    private int direction; // Direction state
+    private int direction; 
 
     public Transform[] floorPoints;
     public ElevatorMover mover;
@@ -27,7 +27,7 @@ public class ElevatorController : MonoBehaviour
 
     private void Update()
     {
-        if (isMoving || requestQueue.Count == 0)
+        if (isMoving || requestQueue.Count == 0)// if elevator is moving or there are no requests in the queue
         {
             return;
         }
@@ -69,11 +69,20 @@ public class ElevatorController : MonoBehaviour
     }
 
     private int DequeueNextTarget()
+   {
+    int next = requestQueue[0];
+    requestQueue.RemoveAt(0);
+
+    if (next > currentFloor)
     {
-        int next = requestQueue[0];
-        requestQueue.RemoveAt(0);
-        direction = next > currentFloor ? 1 : next < currentFloor ? -1 : direction;
-        return next;
+        direction = 1;
+    }
+    else if (next < currentFloor)
+    {
+        direction = -1;
+    }
+
+    return next;
     }
 
     private IEnumerator MoveToFloor(int floor)
@@ -84,7 +93,14 @@ public class ElevatorController : MonoBehaviour
         yield return mover.MoveTo(targetPos, speed);
 
         currentFloor = floor;
-        direction = requestQueue.Count == 0 ? 0 : direction;
+        if (requestQueue.Count == 0)
+        {
+            direction = 0; 
+        }
+        else
+        {
+            direction = direction; 
+        }
 
         yield return new WaitForSeconds(floorStopDelay);
 
@@ -130,7 +146,7 @@ public class ElevatorController : MonoBehaviour
 
     
 
-    public bool CanServeDirection(int floor, FloorButton.Direction callDirection)
+    public bool DecideDirection(int floor, FloorButton.Direction callDirection)
     {
         if (IsIdle()) return true;
 

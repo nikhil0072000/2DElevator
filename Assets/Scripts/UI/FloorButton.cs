@@ -9,7 +9,7 @@ public class FloorButton : MonoBehaviour
 
     public ElevatorManager manager; 
 
-    // Handle Floorbutton press
+    // Handle Floor button press Up and Down
     public void OnButtonPressed()
     {
         Debug.Log("Call from Floor " + floorNumber + " Direction: " + direction);

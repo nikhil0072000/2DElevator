@@ -7,7 +7,7 @@ public class ElevatorDisplay : MonoBehaviour
     public TextMeshProUGUI text; 
     private void Update()
     {
-        // Update floor display
+        // Display current floor in the Text 
         if (elevator != null && text != null)
         {
             text.text = "Floor: " + elevator.currentFloor;
